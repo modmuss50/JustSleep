@@ -1,0 +1,13 @@
+/run
+/*.ipr
+/*.iml
+*.iml
+/bin
+/.idea
+/.gradle
+/build
+/out
+
+
+
+
