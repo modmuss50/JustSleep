@@ -1,0 +1,11 @@
+{
+  "id": "justsleep",
+  "name": "Just Sleep",
+  "version": "1.0.0",
+  "side": "universal",
+  "initializer": "me.modmuss50.justsleep.JustSleep",
+  "mixins": {
+    "client": "justsleep.client.json",
+    "common": "justsleep.common.json"
+  }
+}
