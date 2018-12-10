@@ -7,7 +7,7 @@ buildscript {
 		}
     }
     dependencies {
-        classpath "net.fabricmc:fabric-loom:0.0.13-SNAPSHOT"
+        classpath "net.fabricmc:fabric-loom:0.1.0-SNAPSHOT"
     }
 }
 
@@ -24,8 +24,8 @@ group = 'modmuss50.JustSleep'
 archivesBaseName = "JustSleep-fabric"
 
 dependencies {
-	minecraft "com.mojang:minecraft:18w47a"
-	mappings "net.fabricmc:pomf:18w47a.3"
-	modCompile "net.fabricmc:fabric-loader:18w44a-0.1.0.47"
-    modCompile "net.fabricmc:fabric:0.0.3-SNAPSHOT"
+	minecraft "com.mojang:minecraft:18w49a"
+	mappings "net.fabricmc:yarn:18w49a.2"
+	modCompile "net.fabricmc:fabric-loader:0.2.0.61"
+	modCompile "net.fabricmc:fabric:0.1.0.36"
 }

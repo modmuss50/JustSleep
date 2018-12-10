@@ -2,9 +2,9 @@ package me.modmuss50.justsleep.mixin;
 
 import me.modmuss50.justsleep.JustSleep;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityFactory;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerServer;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,10 +13,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(EntityPlayer.class)
+@Mixin(PlayerEntity.class)
 public abstract class MixinEntityPlayer extends Entity {
 
-	public MixinEntityPlayer(EntityFactory<?> entityFactory, World world) {
+	public MixinEntityPlayer(EntityType<?> entityFactory, World world) {
 		super(entityFactory, world);
 	}
 
@@ -25,7 +25,7 @@ public abstract class MixinEntityPlayer extends Entity {
 	public void method_7358(boolean var1, boolean var2, boolean updateSpawn, CallbackInfo info) {
 		if (updateSpawn) {
 			String uuid = getUuid().toString();
-			if (JustSleep.hasValidBedLocation((EntityPlayer) (Object) this)) {
+			if (JustSleep.hasValidBedLocation((PlayerEntity) (Object) this)) {
 				JustSleep.playerSpawnSetSkip.add(uuid);
 			}
 		}
@@ -41,9 +41,9 @@ public abstract class MixinEntityPlayer extends Entity {
 	}
 
 	@Inject(method = "trySleep", at = @At("RETURN"), cancellable = true)
-	public void trySleep(BlockPos var1, CallbackInfoReturnable<EntityPlayer.SleepResult> info) {
-		if (!world.isRemote && (EntityPlayer) (Object) this instanceof EntityPlayerServer) {
-			JustSleep.updateBedMap((EntityPlayerServer) (Object) this);
+	public void trySleep(BlockPos var1, CallbackInfoReturnable<PlayerEntity.SleepResult> info) {
+		if (!world.isRemote && (PlayerEntity) (Object) this instanceof ServerPlayerEntity) {
+			JustSleep.updateBedMap((ServerPlayerEntity) (Object) this);
 		}
 	}
 
