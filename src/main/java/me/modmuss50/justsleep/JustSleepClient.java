@@ -13,10 +13,10 @@ public class JustSleepClient {
 	public static ButtonWidget createButton(ChatSleepingGui gui) {
 		return new ButtonWidget(202, gui.width / 2 - 100, gui.height - 62, "Set Spawn") {
 			@Override
-			public void onPressed(SoundLoader soundLoader) {
+			public void onPressed(double d1, double d2) {
 				setSpawn = true;
 				MinecraftClient.getInstance().getNetworkHandler().getClientConnection().sendPacket(JustSleep.createSetSpawnPacket());
-				super.onPressed(soundLoader);
+				super.onPressed(d1, d2);
 			}
 		};
 	}

@@ -42,7 +42,7 @@ public abstract class MixinEntityPlayer extends Entity {
 
 	@Inject(method = "trySleep", at = @At("RETURN"), cancellable = true)
 	public void trySleep(BlockPos var1, CallbackInfoReturnable<PlayerEntity.SleepResult> info) {
-		if (!world.isRemote && (PlayerEntity) (Object) this instanceof ServerPlayerEntity) {
+		if (!world.isClient && (PlayerEntity) (Object) this instanceof ServerPlayerEntity) {
 			JustSleep.updateBedMap((ServerPlayerEntity) (Object) this);
 		}
 	}

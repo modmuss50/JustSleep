@@ -33,7 +33,7 @@ public class JustSleep implements ModInitializer {
 
 	public static BlockPos getBedLocation(PlayerEntity player) {
 		String uuid = player.getUuid().toString();
-		if (player.world.isRemote) {
+		if (player.world.isClient) {
 			return validBedMap.getOrDefault(uuid, null);
 		}
 		BlockPos bedLocation = player.getSpawnPosition();
@@ -46,7 +46,7 @@ public class JustSleep implements ModInitializer {
 	}
 
 	public static void updateClientBedLocation(PlayerEntity player, BlockPos pos) {
-		Validate.isTrue(player.world.isRemote);
+		Validate.isTrue(player.world.isClient);
 		String uuid = player.getUuid().toString();
 		validBedMap.remove(uuid);
 		validBedMap.put(uuid, pos);
