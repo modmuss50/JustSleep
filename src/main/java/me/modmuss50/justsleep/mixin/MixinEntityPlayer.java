@@ -21,7 +21,7 @@ public abstract class MixinEntityPlayer extends Entity {
 	}
 
 	// method_7358 awakePlayer
-	@Inject(method = "method_7358", at = @At("HEAD"))
+	@Inject(method = "wakeUp", at = @At("HEAD"))
 	public void method_7358(boolean var1, boolean var2, boolean updateSpawn, CallbackInfo info) {
 		if (updateSpawn) {
 			String uuid = getUuid().toString();

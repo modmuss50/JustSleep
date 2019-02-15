@@ -4,8 +4,8 @@ import me.modmuss50.justsleep.JustSleep;
 import me.modmuss50.justsleep.JustSleepClient;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.ingame.ChatGui;
-import net.minecraft.client.gui.ingame.ChatSleepingGui;
+import net.minecraft.client.gui.ingame.ChatScreen;
+import net.minecraft.client.gui.ingame.SleepingChatScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,14 +15,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
 
-@Mixin(ChatSleepingGui.class)
-public abstract class MixinGuiChatSleeping extends ChatGui {
+@Mixin(SleepingChatScreen.class)
+public abstract class MixinGuiChatSleeping extends ChatScreen {
 
 	private ButtonWidget button;
 
 	@Inject(method = "onInitialized", at = @At("RETURN"))
 	protected void onInitialized(CallbackInfo info) {
-		this.addButton(button = JustSleepClient.createButton((ChatSleepingGui) (Object) this));
+		this.addButton(button = JustSleepClient.createButton((SleepingChatScreen) (Object) this));
 		JustSleepClient.setSpawn = false;
 	}
 

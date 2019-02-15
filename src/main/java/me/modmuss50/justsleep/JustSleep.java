@@ -2,11 +2,13 @@ package me.modmuss50.justsleep;
 
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.networking.CustomPayloadPacketRegistry;
-import net.minecraft.client.network.packet.CustomPayloadClientPacket;
+import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.fabricmc.fabric.api.network.PacketRegistry;
+import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.minecraft.client.network.packet.CustomPayloadS2CPacket;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.network.packet.CustomPayloadServerPacket;
+import net.minecraft.server.network.packet.CustomPayloadC2SPacket;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
@@ -63,14 +65,14 @@ public class JustSleep implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		CustomPayloadPacketRegistry.CLIENT.register(SYNC_BED_STATUS, (packetContext, packetByteBuf) -> {
+		ClientSidePacketRegistry.INSTANCE.register(SYNC_BED_STATUS, (packetContext, packetByteBuf) -> {
 			BlockPos pos = null;
 			if (packetByteBuf.readBoolean()) {
 				pos = packetByteBuf.readBlockPos();
 			}
 			updateClientBedLocation(packetContext.getPlayer(), pos);
 		});
-		CustomPayloadPacketRegistry.SERVER.register(SET_SPAWN, (packetContext, packetByteBuf) -> {
+		ServerSidePacketRegistry.INSTANCE.register(SET_SPAWN, (packetContext, packetByteBuf) -> {
 			PlayerEntity player = packetContext.getPlayer();
 			if (player.isSleeping()) {
 				player.setPlayerSpawn(player.sleepingPos, false);
@@ -78,18 +80,17 @@ public class JustSleep implements ModInitializer {
 		});
 	}
 
-	public static CustomPayloadClientPacket createBedStatusPacket(BlockPos pos) {
+	public static CustomPayloadS2CPacket createBedStatusPacket(BlockPos pos) {
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		buf.writeBoolean(pos != null);
 		if (pos != null) {
 			buf.writeBlockPos(pos);
 		}
-		CustomPayloadClientPacket packet = new CustomPayloadClientPacket(SYNC_BED_STATUS, buf);
-		return packet;
+		return new CustomPayloadS2CPacket(SYNC_BED_STATUS, buf);
 	}
 
-	public static CustomPayloadServerPacket createSetSpawnPacket() {
-		return new CustomPayloadServerPacket(SET_SPAWN, new PacketByteBuf(Unpooled.buffer()));
+	public static CustomPayloadC2SPacket createSetSpawnPacket() {
+		return new CustomPayloadC2SPacket(SET_SPAWN, new PacketByteBuf(Unpooled.buffer()));
 	}
 
 }
