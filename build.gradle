@@ -11,7 +11,7 @@ buildscript {
     }
 }
 
-version = "19w07a-1.0.1"
+version = "19w09a-1.0.1"
 
 def ENV = System.getenv()
 if (ENV.BUILD_NUMBER) {
@@ -24,10 +24,10 @@ group = 'modmuss50.JustSleep'
 archivesBaseName = "JustSleep-fabric"
 
 dependencies {
-	minecraft "com.mojang:minecraft:19w07a"
-	mappings "net.fabricmc:yarn:19w07a.6"
-	modCompile "net.fabricmc:fabric-loader:0.3.6.107"
+	minecraft "com.mojang:minecraft:19w09a"
+	mappings "net.fabricmc:yarn:19w09a.8"
+	modCompile "net.fabricmc:fabric-loader:0.3.7.109"
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modCompile "net.fabricmc:fabric:0.2.1.94"
+	//Fabric api
+	modCompile "net.fabricmc:fabric:0.2.3.109"
 }

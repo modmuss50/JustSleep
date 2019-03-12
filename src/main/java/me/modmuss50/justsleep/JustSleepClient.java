@@ -10,7 +10,7 @@ public class JustSleepClient {
 
 	//this is in a seprate class becuase mixin doesnt handle anonymous classes
 	public static ButtonWidget createButton(SleepingChatScreen gui) {
-		return new ButtonWidget(202, gui.width / 2 - 100, gui.height - 62, "Set Spawn") {
+		return new ButtonWidget(gui.screenWidth / 2 - 100, gui.screenHeight - 62, "Set Spawn") {
 			@Override
 			public void onPressed(double d1, double d2) {
 				setSpawn = true;

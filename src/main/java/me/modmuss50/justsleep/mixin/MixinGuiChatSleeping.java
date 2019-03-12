@@ -8,6 +8,7 @@ import net.minecraft.client.gui.ingame.ChatScreen;
 import net.minecraft.client.gui.ingame.SleepingChatScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -30,16 +31,16 @@ public abstract class MixinGuiChatSleeping extends ChatScreen {
 	public void draw(int i, int i1, float v) {
 		super.draw(i, i1, v);
 		PlayerEntity player = MinecraftClient.getInstance().player;
-		boolean isCurrentSpawnBed = player.sleepingPos.equals(JustSleep.getBedLocation(player));
+		boolean isCurrentSpawnBed = player.getSleepingPosition().orElse(BlockPos.ORIGIN).equals(JustSleep.getBedLocation(player));
 		button.visible = JustSleep.hasValidBedLocation(player) && !isCurrentSpawnBed && !JustSleepClient.setSpawn;
 		if (!JustSleep.hasValidBedLocation(player)) {
-			fontRenderer.draw("Setting spawn point (No previous bed found)", width / 2 - 120, height - 52, Color.RED.getRGB());
+			fontRenderer.draw("Setting spawn point (No previous bed found)", screenWidth / 2 - 120, screenHeight - 55, Color.RED.getRGB());
 		}
 		if (isCurrentSpawnBed) {
-			fontRenderer.draw("This is the current spawn bed", width / 2 - 80, height - 52, Color.BLUE.getRGB());
+			fontRenderer.draw("This is the current spawn bed", screenWidth / 2 - 80, screenHeight - 55, Color.CYAN.getRGB());
 		}
 		if (JustSleepClient.setSpawn) {
-			fontRenderer.draw("Spawn point updated to this bed", width / 2 - 80, height - 52, Color.GREEN.getRGB());
+			fontRenderer.draw("Spawn point updated to this bed", screenWidth / 2 - 80, screenHeight - 55, Color.GREEN.getRGB());
 		}
 	}
 
