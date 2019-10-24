@@ -12,10 +12,12 @@ import net.minecraft.server.network.packet.CustomPayloadC2SPacket;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import org.apache.commons.lang3.Validate;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class JustSleep implements ModInitializer {
@@ -43,8 +45,8 @@ public class JustSleep implements ModInitializer {
 			return null;
 		}
 		//method_7288 = getBedSpawn
-		BlockPos bedSpawnLocation = PlayerEntity.method_7288(player.world, bedLocation, false);
-		return bedSpawnLocation;
+		Optional<Vec3d> bedSpawnLocation = PlayerEntity.method_7288(player.world, bedLocation, false);
+		return bedSpawnLocation.map(BlockPos::new).orElse(null);
 	}
 
 	public static void updateClientBedLocation(PlayerEntity player, BlockPos pos) {
