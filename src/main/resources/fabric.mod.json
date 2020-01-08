@@ -1,11 +1,17 @@
 {
+  "schemaVersion": 1,
   "id": "justsleep",
   "name": "Just Sleep",
   "version": "1.0.0",
-  "side": "universal",
-  "initializer": "me.modmuss50.justsleep.JustSleep",
-  "mixins": {
-    "client": "justsleep.client.json",
-    "common": "justsleep.common.json"
+  "entrypoints": {
+    "main": ["me.modmuss50.justsleep.JustSleep"],
+    "client": ["me.modmuss50.justsleep.JustSleepClient"]
+  },
+  "mixins": [
+    "justsleep.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": "1.15.1"
   }
 }

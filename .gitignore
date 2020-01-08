@@ -2,6 +2,7 @@
 /*.ipr
 /*.iml
 *.iml
+*.iws
 /bin
 /.idea
 /.gradle

@@ -7,11 +7,11 @@ buildscript {
 		}
     }
     dependencies {
-        classpath "net.fabricmc:fabric-loom:0.2.5-SNAPSHOT"
+        classpath "net.fabricmc:fabric-loom:0.2.6-SNAPSHOT"
     }
 }
 
-version = "1.14.4-1.0.2"
+version = "1.15.1-1.2.0"
 
 def ENV = System.getenv()
 if (ENV.BUILD_NUMBER) {
@@ -24,10 +24,10 @@ group = 'modmuss50.JustSleep'
 archivesBaseName = "JustSleep-fabric"
 
 dependencies {
-	minecraft "com.mojang:minecraft:1.14.4"
-	mappings "net.fabricmc:yarn:1.14.4+build.9"
-	modCompile "net.fabricmc:fabric-loader:0.6.3+build.167"
+	minecraft "com.mojang:minecraft:1.15.1"
+	mappings "net.fabricmc:yarn:1.15.1+build.26:v2"
+	modCompile "net.fabricmc:fabric-loader:0.7.3+build.176"
 
 	//Fabric api
-	modCompile "net.fabricmc.fabric-api:fabric-api:0.4.0+build.240-1.14"
+	modCompile "net.fabricmc.fabric-api:fabric-api:0.4.27+build.286-1.15"
 }
