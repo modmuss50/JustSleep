@@ -67,17 +67,10 @@ public class JustSleep implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		ClientSidePacketRegistry.INSTANCE.register(SYNC_BED_STATUS, (packetContext, packetByteBuf) -> {
-			BlockPos pos = null;
-			if (packetByteBuf.readBoolean()) {
-				pos = packetByteBuf.readBlockPos();
-			}
-			updateClientBedLocation(packetContext.getPlayer(), pos);
-		});
 		ServerSidePacketRegistry.INSTANCE.register(SET_SPAWN, (packetContext, packetByteBuf) -> {
 			PlayerEntity player = packetContext.getPlayer();
 			if (player.isSleeping()) {
-				player.getSleepingPosition().ifPresent((blockPos) -> player.setPlayerSpawn(blockPos, false));
+				player.getSleepingPosition().ifPresent((blockPos) -> player.setPlayerSpawn(blockPos, false, false));
 			}
 		});
 	}

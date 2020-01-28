@@ -20,28 +20,18 @@ public abstract class MixinEntityPlayer extends Entity {
 		super(entityFactory, world);
 	}
 
-	// method_7358 awakePlayer
-	@Inject(method = "wakeUp", at = @At("HEAD"))
-	public void method_7358(boolean var1, boolean var2, boolean updateSpawn, CallbackInfo info) {
-		if (updateSpawn) {
-			String uuid = getUuid().toString();
-			if (JustSleep.hasValidBedLocation((PlayerEntity) (Object) this)) {
-				JustSleep.playerSpawnSetSkip.add(uuid);
-			}
-		}
-	}
-
 	@Inject(method = "setPlayerSpawn", at = @At("HEAD"), cancellable = true)
-	public void setPlayerSpawn(BlockPos var1, boolean var2, CallbackInfo info) {
-		String uuid = getUuid().toString();
-		if (JustSleep.playerSpawnSetSkip.contains(uuid)) {
-			JustSleep.playerSpawnSetSkip.remove(uuid);
-			info.cancel();
+	public void setPlayerSpawn(BlockPos pos, boolean forced, boolean fromBed, CallbackInfo info) {
+		// Skip setting spawn if it was from bed, but allow it if they were
+		// sneaking and it is day (otherwise no way to set spawn during day)
+		if (JustSleep.hasValidBedLocation((PlayerEntity)(Object)this)) {
+			boolean isSneaking = this.isSneaking();
+			if (fromBed && !(this.world.isDay() && isSneaking)) info.cancel();
 		}
 	}
 
-	@Inject(method = "trySleep", at = @At("RETURN"), cancellable = true)
-	public void trySleep(BlockPos var1, CallbackInfoReturnable<PlayerEntity.SleepFailureReason> info) {
+	@Inject(method = "trySleep", at = @At("RETURN"))
+	public void trySleep(CallbackInfoReturnable<PlayerEntity.SleepFailureReason> info) {
 		if (!world.isClient && (PlayerEntity) (Object) this instanceof ServerPlayerEntity) {
 			JustSleep.updateBedMap((ServerPlayerEntity) (Object) this);
 		}
